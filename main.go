@@ -169,9 +169,9 @@ type RawTransaction struct {
 	Vout []Vout `json:"vout"`
 }
 
-func decodeTransaction(txid string,blockhash string) {	
+func decodeTransaction(txid string, blockhash string) {
 	var tx RawTransaction
-	if err := callRPC("getrawtransaction", []interface{}{txid, true,blockhash}, &tx); err != nil {
+	if err := callRPC("getrawtransaction", []interface{}{txid, true, blockhash}, &tx); err != nil {
 		fmt.Println("Error:", err)
 		return
 	}
@@ -193,7 +193,36 @@ func decodeTransaction(txid string,blockhash string) {
 	}
 }
 
+// Challenge 5: Block Details
+type Block struct {
+	Hash         string   `json:"hash"`
+	Height       int      `json:"height"`
+	Time         int64    `json:"time"`
+	Nonce        uint32   `json:"nonce"`
+	Difficulty   float64  `json:"difficulty"`
+	PreviousHash string   `json:"previousblockhash"`
+	Transactions []string `json:"tx"`
+}
 
+func getBlockDetails(blockhash string) {
+	var block Block
+	if err := callRPC("getblock", []interface{}{blockhash}, &block); err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+	fmt.Println("\n--- Block Details ---")
+	fmt.Printf("Hash:         %s\n", block.Hash)
+	fmt.Printf("Height:       %d\n", block.Height)
+	fmt.Printf("Time:         %d\n", block.Time)
+	fmt.Printf("Nonce:        %d\n", block.Nonce)
+	fmt.Printf("Difficulty:   %f\n", block.Difficulty)
+	fmt.Printf("Previous:     %s\n", block.PreviousHash)
+	fmt.Printf("Transactions: %d\n", len(block.Transactions))
+	fmt.Println("TXIDs:")
+	for _, txid := range block.Transactions {
+		fmt.Printf("  %s\n", txid)
+	}
+}
 
 func main() {
 	fmt.Println("Bitcoin Explorer - Day 2")
@@ -202,8 +231,9 @@ func main() {
 	getWalletBalance()
 	listTransactions()
 	decodeTransaction("502f29ad32725c51ede6b37e8fe5fc03cce81489c964d9a509119ea3177f0cfe",
-    "1df39d01f9d10d6b8db2ea73572422d7df1edfbf0af0d8d9e026ab846d9ce9ea",
-)
+		"1df39d01f9d10d6b8db2ea73572422d7df1edfbf0af0d8d9e026ab846d9ce9ea",
+	)
+	getBlockDetails("1df39d01f9d10d6b8db2ea73572422d7df1edfbf0af0d8d9e026ab846d9ce9ea")
 }
 
 // clone lnd
