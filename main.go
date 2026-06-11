@@ -11,7 +11,7 @@ import (
 // RPC config
 const (
 	rpcURL    = "http://127.0.0.1:18443"
-	rpcWallet = "http://127.0.0.1:18443/wallet/juma"
+	rpcWallet = "http://127.0.0.1:18443/wallet/alice"
 	rpcUser   = "bootcamp"
 	rpcPass   = "bootcamp123"
 )
@@ -230,10 +230,10 @@ func main() {
 	getBlockchainInfo()
 	getWalletBalance()
 	listTransactions()
-	decodeTransaction("502f29ad32725c51ede6b37e8fe5fc03cce81489c964d9a509119ea3177f0cfe",
-		"1df39d01f9d10d6b8db2ea73572422d7df1edfbf0af0d8d9e026ab846d9ce9ea",
-	)
-	getBlockDetails("1df39d01f9d10d6b8db2ea73572422d7df1edfbf0af0d8d9e026ab846d9ce9ea")
+	decodeTransaction(
+    "4747623575792a1cec4494bbc4d92d9b3528bbb8ddb1c34c5fcb8d6bd2d34a77",
+    "6aa6a14f23bc4d31e8dceeef9c11cdefa4467300a84bc6caa6f7a3e1885b2ccb",
+)
+getBlockDetails("6aa6a14f23bc4d31e8dceeef9c11cdefa4467300a84bc6caa6f7a3e1885b2ccb")
 }
-
 // clone lnd
